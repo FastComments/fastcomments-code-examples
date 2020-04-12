@@ -12,7 +12,7 @@
     <div id="fastcomments-widget"></div>
     <script>
         window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
-            tenantId: 'demo',
+            tenantId: 'demo', // REPLACE THIS WITH YOUR TENANT ID
             sso: <%- JSON.stringify(ssoConfig) %>,
             urlId: '<%= urlId %>'
         });
