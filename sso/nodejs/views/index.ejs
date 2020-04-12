@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to the <%= title %></p>
+
+    <script src="https://cdn.fastcomments.com/js/embed.min.js"></script>
+    <div id="fastcomments-widget"></div>
+    <script>
+        window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
+            tenantId: 'demo',
+            sso: <%- JSON.stringify(ssoConfig) %>,
+            urlId: '<%= urlId %>'
+        });
+    </script>
+  </body>
+</html>
