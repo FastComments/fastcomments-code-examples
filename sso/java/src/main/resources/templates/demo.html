@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FastComments SSO Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>FastComments SSO Demo</h1>
+    <script src="https://cdn.fastcomments.com/js/embed.min.js"></script>
+    <div id="fastcomments-widget"></div>
+    <script th:inline="javascript">
+        window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
+            tenantId: 'demo', // REPLACE WITH YOUR TENANT ID IN PRODUCTION
+            sso: [(${ssoPayloadString})]
+        });
+    </script>
+</body>
+</html>
