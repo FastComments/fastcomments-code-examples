@@ -7,7 +7,7 @@ class Server
 
     private function get_sso_config($ssoKey)
     {
-        $timestamp = time();
+        $timestamp = time() * 1000;
 
         $result = array();
         $result['timestamp'] = $timestamp;
