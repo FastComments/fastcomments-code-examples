@@ -1,2 +1,2 @@
 # fastcomments-code-examples
-Examples for FastComments Usage, like SSO Integration
+Examples for FastComments usage, like SPA or SSO integration.

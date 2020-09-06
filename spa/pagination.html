@@ -1,0 +1,54 @@
+<meta name='viewport' content='width=device-width'>
+<script src="https://fastcomments.com/js/embed.js"></script>
+
+<p style="font-size: 18px; line-height: 28px">
+    This is an example of FastComments in a single-page application where it is necessary to change the content the widget is
+    tied to dynamically. Here we use the concept of "pages" - but the same mechanism could apply for blog posts, or product pages.
+    <br>
+    We've kept a real "tenant id" here so that the comments will actually save and you can test the pagination. If you want to run this code
+    somewhere other than "localhost" you will need to use the tenant id "demo" or a real tenant id.
+</p>
+
+<h2 id="page-number"></h2>
+<button onclick="prev()">Prev</button>
+<button onclick="next()">Next</button>
+
+<div id="fastcomments-widget"></div>
+<script>
+    let pageNumber = 0;
+    function getUrlId() {
+        return 'test-' + pageNumber;
+    }
+
+    function updatePage() {
+        document.getElementById('page-number').innerHTML = 'Page: ' + (pageNumber + 1);
+    }
+
+    const config = {
+        tenantId: 'nYrnfYEv',
+        url: 'https://example.com' // You can customize this dynamically, too.
+    };
+    config.urlId = getUrlId();
+    const result = window.FastCommentsUI(document.getElementById('fastcomments-widget'), config);
+    updatePage();
+
+    function next() {
+        pageNumber++;
+        console.log('next', pageNumber);
+        update();
+    }
+
+    function prev() {
+        pageNumber--;
+        console.log('prev', pageNumber);
+        update();
+    }
+
+    function update() {
+        updatePage();
+        result.update({
+            ...config,
+            urlId: 'test-' + pageNumber,
+        });
+    }
+</script>
