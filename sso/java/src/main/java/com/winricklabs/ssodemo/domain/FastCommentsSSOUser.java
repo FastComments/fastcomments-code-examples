@@ -5,4 +5,5 @@ public class FastCommentsSSOUser {
     public String email;
     public String username;
     public String avatar;
+    public boolean optedInNotifications;
 }

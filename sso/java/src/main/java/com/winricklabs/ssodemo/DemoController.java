@@ -84,6 +84,7 @@ public class DemoController {
         fastCommentsSSOUser.email = "someperson@someplace.com";
         fastCommentsSSOUser.username = "Some SSO USer";
         fastCommentsSSOUser.avatar = "https://static.fastcomments.com/1582299581264-69384190_3015192525174365_476457575596949504_o.jpg";
+        fastCommentsSSOUser.optedInNotifications = true;
         return fastCommentsSSOUser;
     }
 }
