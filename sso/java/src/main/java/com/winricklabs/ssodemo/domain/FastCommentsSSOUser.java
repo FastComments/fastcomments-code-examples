@@ -6,4 +6,5 @@ public class FastCommentsSSOUser {
     public String username;
     public String avatar;
     public boolean optedInNotifications;
+    public String displayLabel;
 }

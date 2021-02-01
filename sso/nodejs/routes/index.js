@@ -11,7 +11,8 @@ router.get('/', function (req, res, next) {
         email: 'someguy@someplace.com',
         username: 'some-username',
         avatar: 'https://static.fastcomments.com/1582299581264-69384190_3015192525174365_476457575596949504_o.jpg',
-        optedInNotifications: true
+        optedInNotifications: true,
+        displayLabel: 'VIP User'
     };
 
     const userDataJSON = JSON.stringify(someUser);

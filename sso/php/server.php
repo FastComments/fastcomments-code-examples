@@ -19,6 +19,7 @@ class Server
         $sso_user['username'] = 'some-sso-user';
         $sso_user['avatar'] = 'https://static.fastcomments.com/1582299581264-69384190_3015192525174365_476457575596949504_o.jpg';
         $sso_user['optedInNotifications'] = true;
+        $sso_user['displayLabel'] = 'VIP User';
 
         $userDataJSONBase64 = base64_encode(json_encode($sso_user));
         $verificationHash = hash_hmac('sha256', $timestamp . $userDataJSONBase64, $ssoKey);
