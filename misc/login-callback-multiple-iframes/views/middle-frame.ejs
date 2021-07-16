@@ -1,0 +1,20 @@
+<script src="https://cdn.fastcomments.com/js/embed-v2.min.js"></script>
+<div id="fastcomments-widget"></div>
+<script>
+    (async function main() {
+        const response = await fetch('http://localhost:3004/sso');
+        const json = await response.json();
+        window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
+            tenantId: 'demo', // REPLACE THIS WITH YOUR TENANT ID
+            sso: {
+                ...json.ssoConfig,
+                loginCallback: function loginCallback() {
+                    window.parent.postMessage(JSON.stringify({
+                        type: 'login'
+                    }), '*'); // might be worth putting your site here instead of *
+                },
+            },
+            urlId: 'login-callback-multiple-iframes'
+        });
+    })();
+</script>

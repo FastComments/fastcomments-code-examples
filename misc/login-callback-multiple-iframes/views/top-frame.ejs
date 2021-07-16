@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Iframe Communication</title>
+    <style>
+        iframe {
+          width: 100%;
+          height: 500px;
+        }
+    </style>
+    <script>
+      (function main() {
+        function myTopLevelLoginFunction() {
+          alert('Top level login called!');
+        }
+
+        function messageHandler(e) {
+                // if (!e.data || e.origin !== 'mysite.com') { // use this line instead of the below one in production
+                if (!e.data) {
+                    return;
+                }
+                try {
+                    var data = JSON.parse(e.data);
+
+                    if (data.type === 'login') {
+                        myTopLevelLoginFunction();
+                    }
+                } catch (err) {
+                    console.error(e, err);
+                }
+            }
+
+        window.addEventListener('message', messageHandler, false);
+      })();
+    </script>
+  </head>
+  <body>
+    <h1>Iframe Communication Example</h1>
+    <p>We can handle login/logout events from the child iframe via message passing.</p>
+    <iframe src="/middle-frame">
+  </body>
+</html>
