@@ -8,8 +8,9 @@ router.get('/', function (req, res, next) {
     // Create the user object from your database.
     const someUser = {
         id: 'some-user-id',
-        email: 'someguy@someplace.com',
+        email: 'someone@someplace.com',
         username: 'some-username',
+        displayName: 'Some Username',
         avatar: 'https://static.fastcomments.com/1582299581264-69384190_3015192525174365_476457575596949504_o.jpg',
         optedInNotifications: true,
         displayLabel: 'VIP User',
