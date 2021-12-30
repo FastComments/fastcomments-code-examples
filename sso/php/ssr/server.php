@@ -45,7 +45,7 @@ class Server
         $tenantId = rawurlencode($this->TENANT_ID);
         $urlId = rawurlencode($this->PAGE_URL_OR_ID);
         $fastcomments_url = "https://fastcomments.com/ssr/comments?tenantId=$tenantId&urlId=$urlId&sso=$sso_query_string";
-        // Normally you'd pass $sso_payload to your view engine.
+        // Normally you'd pass $fastcomments_url to your view engine.
         include "view.php";
     }
 }
