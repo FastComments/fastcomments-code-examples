@@ -87,6 +87,8 @@ public class DemoController {
         fastCommentsSSOUser.optedInNotifications = true;
         fastCommentsSSOUser.displayLabel = "VIP User";
         fastCommentsSSOUser.websiteUrl = "https://example.com/user-profile-page";
+        fastCommentsSSOUser.isAdmin = false;
+        fastCommentsSSOUser.isModerator = false;
         return fastCommentsSSOUser;
     }
 }

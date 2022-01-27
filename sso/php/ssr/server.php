@@ -23,6 +23,8 @@ class Server
         $sso_user['optedInNotifications'] = true;
         $sso_user['displayLabel'] = 'VIP User';
         $sso_user['websiteUrl'] = null; // You can set this to a link to the user's account page, or maybe their own website.
+        $sso_user['isAdmin'] = false;
+        $sso_user['isModerator'] = false;
 
         $userDataJSONBase64 = base64_encode(json_encode($sso_user));
         $verificationHash = hash_hmac('sha256', $timestamp . $userDataJSONBase64, $ssoKey);

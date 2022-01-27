@@ -8,4 +8,6 @@ public class FastCommentsSSOUser {
     public boolean optedInNotifications;
     public String displayLabel; // Optional
     public String websiteUrl; // Optional
+    public boolean isAdmin; // Optional
+    public boolean isModerator; // Optional
 }

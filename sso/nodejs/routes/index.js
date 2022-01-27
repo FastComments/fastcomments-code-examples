@@ -14,7 +14,9 @@ router.get('/', function (req, res, next) {
         avatar: 'https://static.fastcomments.com/1582299581264-69384190_3015192525174365_476457575596949504_o.jpg',
         optedInNotifications: true,
         displayLabel: 'VIP User',
-        websiteUrl: null // You can set this to a link to the user's account page, or maybe their own website.
+        websiteUrl: null, // You can set this to a link to the user's account page, or maybe their own website.
+        isAdmin: false,
+        isModerator: false
     };
 
     const userDataJSON = JSON.stringify(someUser);
