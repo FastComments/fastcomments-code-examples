@@ -54,6 +54,7 @@ function assertResponseSuccess(response: AxiosResponse) {
     });
     assertResponseSuccess(createTenantResponse);
     const newTenant = createTenantResponse.data.tenant;
+    console.log('Created tenant', newTenant.name, newTenant.id);
 
     // STEP 2. - Create a package for the tenant. This defines their limits, etc.
     const createPackageResponse = await axios.post(`${HOST}/api/v1/tenant-packages?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${newTenant.id}`, {
@@ -77,12 +78,14 @@ function assertResponseSuccess(response: AxiosResponse) {
     });
     assertResponseSuccess(createPackageResponse);
     const newPackage = createPackageResponse.data.tenantPackage;
+    console.log('Created package', newPackage.name, newPackage.id);
 
     // STEP 3. - Set the newly created package as the active one.
     const addPackageToTenantResponse = await axios.patch(`${HOST}/api/v1/tenants/${newTenant.id}?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${newTenant.id}`, {
         packageId: newPackage.id
     });
     assertResponseSuccess(addPackageToTenantResponse);
+    console.log('Added package to tenant.');
 
     // STEP 4. - Create our users and send them login links to make their life easier.
     for (const user of USERS_TO_CREATE) {
@@ -102,21 +105,28 @@ function assertResponseSuccess(response: AxiosResponse) {
         });
         assertResponseSuccess(tenantUserCreateResponse);
         const newTenantUser = tenantUserCreateResponse.data.tenantUser;
+        console.log('Created new tenant user', newTenantUser.username, newTenantUser.id);
 
         const sendLoginLinkResponse = await axios.post(`${HOST}/api/v1/tenant-users/${newTenantUser.id}/send-login-link?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${newTenant.id}`, null);
         assertResponseSuccess(sendLoginLinkResponse);
+        console.log('Sent login link to new tenant user', newTenantUser.username, newTenantUser.id);
     }
 
     // STEP 5. - Create and invite our moderators.
     for (const moderator of MODERATORS_TO_INVITE) {
         const [name, email] = moderator;
-        const createModeratorResponse = await axios.post(`${HOST}/api/v1/moderators?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${PARENT_TENANT_ID}`, {
+        const createModeratorResponse = await axios.post(`${HOST}/api/v1/moderators?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${newTenant.id}`, {
             name,
             email,
         });
         assertResponseSuccess(createModeratorResponse);
+        const newModerator = createModeratorResponse.data.moderator;
+        console.log('Created new moderator', newModerator.name, newModerator.id);
 
-        const inviteResponse = await axios.post(`${HOST}/api/v1/moderators/${createModeratorResponse.data.moderator.id}/send-invite?API_KEY=${PARENT_TENANT_ID}&tenantId=${newTenant.id}&fromName=${MODERATOR_INVITE_FROM_NAME}`);
+        const inviteResponse = await axios.post(`${HOST}/api/v1/moderators/${newModerator.id}/send-invite?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${newTenant.id}&fromName=${encodeURIComponent(MODERATOR_INVITE_FROM_NAME)}`);
         assertResponseSuccess(inviteResponse);
+        console.log('Sent new moderator an invite via email', newModerator.name, newModerator.id);
     }
+    console.log('Done!');
+    process.exit(0);
 })();
