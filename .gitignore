@@ -10,3 +10,5 @@ sso/php/.idea/php.iml
 sso/php/.idea/vcs.xml
 
 .idea
+
+white-labeling/node_modules

@@ -1,0 +1,15 @@
+{
+  "name": "create-white-labeled-tenant",
+  "description": "Create a white-labeled tenant via the FastComments API. Add users and invite moderators.",
+  "scripts": {
+    "create-white-labeled-tenant": "ts-node create-white-labeled-tenant.ts"
+  },
+  "dependencies": {
+    "axios": "^0.25.0",
+    "fastcomments-typescript": "^1.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.5",
+    "ts-node": "^10.5.0"
+  }
+}
