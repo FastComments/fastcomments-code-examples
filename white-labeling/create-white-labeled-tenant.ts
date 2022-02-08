@@ -60,21 +60,37 @@ function assertResponseSuccess(response: AxiosResponse) {
     const createPackageResponse = await axios.post(`${HOST}/api/v1/tenant-packages?API_KEY=${PARENT_TENANT_API_KEY}&tenantId=${newTenant.id}`, {
         name: 'Default Package',
         tenantId: newTenant.id,
-        monthlyCostUSD: 5,
-        yearlyCostUSD: 50,
-        maxMonthlyPageLoads: 1000,
-        maxMonthlyAPICredits: 1000,
-        maxMonthlyComments: 1000,
-        maxConcurrentUsers: 1000,
+        monthlyCostUSD: null, // this example uses flex pricing
+        yearlyCostUSD: null, // this example uses flex pricing
+        maxMonthlyPageLoads: 50_000,
+        maxMonthlyAPICredits: 50_000,
+        maxMonthlyComments: 50_000,
+        maxConcurrentUsers: 50_000,
         maxTenantUsers: 10,
-        maxSSOUsers: 1000,
-        maxModerators: 500,
-        maxDomains: 1000,
+        maxSSOUsers: 50_000,
+        maxModerators: 100,
+        maxDomains: 3,
         hasWhiteLabeling: false,
-        hasDebranding: false,
+        hasDebranding: true,
         forWhoText: 'For Everyone',
         featureTaglines: ['Some Tag', 'Some Other Tag'],
-        hasFlexPricing: false,
+        hasFlexPricing: true,
+        // if hasFlexPricing is true, you must specify the below:
+        flexPageLoadCostCents: 100,
+        flexPageLoadUnit: 100_000, // this means, for every 100000 page loads, we charge 100 cents USD
+        flexCommentCostCents: 100,
+        flexCommentUnit: 100_000,
+        flexSSOUserCostCents: 100,
+        flexSSOUserUnit: 1_000,
+        flexAPICreditCostCents: 100,
+        flexAPICreditUnit: 50_000,
+        flexModeratorCostCents: 500,
+        flexModeratorUnit: 1,
+        flexAdminCostCents: 1_000,
+        flexAdminUnit: 1,
+        flexDomainCostCents: 1_000,
+        flexDomainUnit: 1,
+        flexMinimumCostCents: 99,
     });
     assertResponseSuccess(createPackageResponse);
     const newPackage = createPackageResponse.data.tenantPackage;
