@@ -2,6 +2,8 @@
  * If you have to write your own comment parser in your own client language/framework, here's a simple guide with some test cases.
  * It does not use regexes or anything, so it can be ported cross platform.
  * This is a very simple example and will probably need extended for your use case. Pull requests welcome!
+ *
+ * Note that if your client supports HTML, like a browser, you can just use the generated "commentHTML" field and not worry about parsing.
  */
 (function commentParseExample() {
     const Tests = [
