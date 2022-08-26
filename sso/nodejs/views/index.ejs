@@ -13,7 +13,7 @@
     <div id="fastcomments-widget"></div>
     <script>
         window.FastCommentsUI(document.getElementById('fastcomments-widget'), {
-            tenantId: 'demo', // REPLACE THIS WITH YOUR TENANT ID
+            tenantId: '<%= TENANT_ID %>',
             sso: <%- JSON.stringify(ssoConfig) %>, // sso is an *object* - not a string. It may not seem that way here - what we are doing is creating a JSON object in the EJS template from a regular JS object. If you're calling an API, it may look different.
             urlId: '<%= urlId %>'
         });
