@@ -50,7 +50,8 @@ function assertResponseSuccess(response: AxiosResponse) {
             {
                 domain: NEW_TENANT_DOMAIN
             }
-        ]
+        ],
+        billingHandledExternally: true
     });
     assertResponseSuccess(createTenantResponse);
     const newTenant = createTenantResponse.data.tenant;
