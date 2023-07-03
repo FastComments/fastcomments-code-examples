@@ -1,9 +1,17 @@
 import Head from 'next/head';
 import {FastCommentsCommentWidget} from "fastcomments-react";
 import {useRouter} from "next/router";
-import Link from "next/link";
 
-export default function Home() {
+const TENANT_ID = 'demo'; // REPLACE THIS WITH YOUR TENANT ID
+
+export default function ExampleSimple() {
+    const {asPath} = useRouter(); // comments will be tied to this (page specific but domain-agnostic)
+    const origin =
+        typeof window !== "undefined" && window.location.origin
+            ? window.location.origin
+            : "";
+
+    const fullURL = origin + asPath; // but link directly to this (absolute url)
     return (
         <div className="container">
             <Head>
@@ -12,11 +20,8 @@ export default function Home() {
             </Head>
 
             <main>
-                <h1>FastComments Next.js Examples</h1>
-                <ul>
-                    <li><Link href="/example-simple">Simple Example</Link></li>
-                    <li><Link href="/example-secure-sso">Secure SSO Example</Link></li>
-                </ul>
+                <h1>FastComments Simple Next.js Example</h1>
+                <FastCommentsCommentWidget tenantId={TENANT_ID} urlId={asPath} url={fullURL}></FastCommentsCommentWidget>
             </main>
 
             <style jsx>{`
