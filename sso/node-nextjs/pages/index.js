@@ -16,6 +16,7 @@ export default function Home() {
                 <ul>
                     <li><Link href="/example-simple">Simple Example</Link></li>
                     <li><Link href="/example-secure-sso">Secure SSO Example</Link></li>
+                    <li><Link href="/example-simple-sso">Simple SSO Example</Link></li>
                 </ul>
             </main>
 
