@@ -3,10 +3,7 @@ import {FastCommentsCommentWidget} from "fastcomments-react";
 import {useRouter} from "next/router";
 import * as crypto from 'crypto';
 
-const API_SECRET = 'DEMO_API_SECRET'; // Replace this with your own in production! This will only work with the "demo" tenant id.
-const TENANT_ID = 'demo'; // REPLACE THIS WITH YOUR TENANT ID
-
-function getSSOConfig(isLoggedIn) {
+function getSSOConfig(API_SECRET, isLoggedIn) {
     // Create the user object from your database.
     const someUser = {
         id: 1,
@@ -39,8 +36,20 @@ function getSSOConfig(isLoggedIn) {
     };
 }
 
-export default function ExampleSecureSSO() {
+export async function getServerSideProps() {
+    const API_SECRET = 'DEMO_API_SECRET'; // Replace this with your own in production! This will only work with the "demo" tenant id.
+    const TENANT_ID = 'demo'; // REPLACE THIS WITH YOUR TENANT ID
     const IS_LOGGED_IN = true; // change to demo logged out behavior
+    const ssoConfig = getSSOConfig(API_SECRET, IS_LOGGED_IN);
+    return {
+        props: {
+            TENANT_ID,
+            ssoConfig
+        },
+    };
+}
+
+export default function ExampleSecureSSO({ TENANT_ID, ssoConfig }) {
     const {asPath} = useRouter(); // comments will be tied to this (page specific but domain-agnostic)
     const origin =
         typeof window !== "undefined" && window.location.origin
@@ -57,7 +66,7 @@ export default function ExampleSecureSSO() {
 
             <main>
                 <h1>FastComments Secure SSO Next.js Example</h1>
-                <FastCommentsCommentWidget tenantId={TENANT_ID} urlId={asPath} url={fullURL} sso={getSSOConfig(IS_LOGGED_IN)}></FastCommentsCommentWidget>
+                <FastCommentsCommentWidget tenantId={TENANT_ID} urlId={asPath} url={fullURL} sso={ssoConfig}></FastCommentsCommentWidget>
             </main>
 
             <style jsx>{`
