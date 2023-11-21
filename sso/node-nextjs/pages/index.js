@@ -1,6 +1,4 @@
 import Head from 'next/head';
-import {FastCommentsCommentWidget} from "fastcomments-react";
-import {useRouter} from "next/router";
 import Link from "next/link";
 
 export default function Home() {
@@ -17,6 +15,7 @@ export default function Home() {
                     <li><Link href="/example-simple">Simple Example</Link></li>
                     <li><Link href="/example-secure-sso">Secure SSO Example</Link></li>
                     <li><Link href="/example-simple-sso">Simple SSO Example</Link></li>
+                    <li><Link href="/example-user-notifications">List User Unread Notifications</Link></li>
                 </ul>
             </main>
 
