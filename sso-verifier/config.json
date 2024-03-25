@@ -1,0 +1,43 @@
+{
+  "HTTP_URI": "",
+  "HTTP_METHOD": "GET",
+  "CONCURRENT_COUNT": 100,
+  "DELAY_MS": 10,
+  "DURATION_MS": 60000,
+  "users": [
+    {
+      "id": "1",
+      "email": "user-1@somewhere.com",
+      "username": "user-1",
+      "displayName": "User One",
+      "avatar": "https://example.com/one.png",
+      "optedInNotifications": true,
+      "displayLabel": "VIP User",
+      "websiteUrl": null,
+      "isAdmin": true,
+      "isModerator": false
+    },
+    {
+      "id": "2",
+      "email": "user-2@somewhere.com",
+      "username": "user-2",
+      "displayName": "User Two",
+      "avatar": "https://example.com/two.png",
+      "optedInNotifications": true,
+      "websiteUrl": null,
+      "isAdmin": false,
+      "isModerator": false
+    },
+    {
+      "id": "3",
+      "email": "user-3@somewhere.com",
+      "username": "user-3",
+      "displayName": "User Three",
+      "avatar": "https://example.com/three.png",
+      "optedInNotifications": true,
+      "websiteUrl": null,
+      "isAdmin": false,
+      "isModerator": false
+    }
+  ]
+}
