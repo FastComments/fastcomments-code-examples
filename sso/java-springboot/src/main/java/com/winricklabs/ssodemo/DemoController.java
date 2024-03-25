@@ -7,7 +7,9 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -22,6 +24,7 @@ public class DemoController {
     private static final String FC_API_KEY = "DEMO_API_SECRET";
     private final Gson gson = new Gson();
     private final Mac encrypt;
+    private final DemoDB db;
 
     public DemoController() throws NoSuchAlgorithmException, InvalidKeyException {
         // Setup HMAC-SHA256 encryption so we don't do it per-request. Note the use of .clone() later to make this thread-safe.
@@ -29,20 +32,32 @@ public class DemoController {
         SecretKeySpec secret_key = new SecretKeySpec(FC_API_KEY.getBytes(), "HmacSHA256");
         sha256_HMAC.init(secret_key);
         this.encrypt = sha256_HMAC;
+        this.db = new DemoDB();
     }
 
     @GetMapping("/demo")
     public String demo(@RequestParam(name = "logout", required = false, defaultValue = "false") String logout, Model model) throws CloneNotSupportedException {
         final boolean isLoggedOut = Objects.equals(logout, "true"); // Just to demo an unauthenticated user.
         model.addAttribute("logout", logout);
-        model.addAttribute("ssoPayloadString", gson.toJson(isLoggedOut ? this.getLoggedOutSSOPayload() : this.getSSOPayload()));
+        model.addAttribute("ssoPayloadString", gson.toJson(isLoggedOut ? this.getLoggedOutSSOPayload() : this.getSSOPayload("user-1")));
 
         return "demo"; // we return the view to render
     }
 
-    private FastCommentsSSOPayload getSSOPayload() throws CloneNotSupportedException {
+    // RestController for API endpoint, nested to share configuration and services
+    @RestController
+    @RequestMapping("/demo-api") // Base path for the API methods in this nested controller
+    public class DemoApiController {
+
+        @GetMapping
+        public FastCommentsSSOPayload demoApi(@RequestParam(name = "userId", required = false) String userId) throws CloneNotSupportedException {
+            return getSSOPayload(userId);
+        }
+    }
+
+    private FastCommentsSSOPayload getSSOPayload(String userId) throws CloneNotSupportedException {
         // Get our user from our "database".
-        final FastCommentsSSOUser user = this.getDemoUser();
+        final FastCommentsSSOUser user = this.db.getUser(userId);
 
         final long now = System.currentTimeMillis();
 
@@ -65,7 +80,12 @@ public class DemoController {
     }
 
     private String getBytesAsHex(byte[] bytes) {
-        return String.format("%032x", new BigInteger(1, bytes));
+        StringBuilder hexString = new StringBuilder(String.format("%032x", new BigInteger(1, bytes)));
+        // Ensure the string is exactly 64 characters long, padding with leading zeros if necessary
+        while (hexString.length() < 64) {
+            hexString.insert(0, "0");
+        }
+        return hexString.toString();
     }
 
     // When logged out, we should return an almost empty FastCommentsSSOPayload - but it should have the login/out urls!
@@ -75,20 +95,5 @@ public class DemoController {
         fastCommentsSSOPayload.logoutURL = "/demo?logout=true";
 
         return fastCommentsSSOPayload;
-    }
-
-    private FastCommentsSSOUser getDemoUser() {
-        // You should get your user from your database and construct this object instead of using the demo values.
-        FastCommentsSSOUser fastCommentsSSOUser = new FastCommentsSSOUser();
-        fastCommentsSSOUser.id = "some-id"; // Do NOT put private information in the id.
-        fastCommentsSSOUser.email = "someperson@someplace.com";
-        fastCommentsSSOUser.username = "Some SSO USer";
-        fastCommentsSSOUser.avatar = "https://static.fastcomments.com/1582299581264-69384190_3015192525174365_476457575596949504_o.jpg";
-        fastCommentsSSOUser.optedInNotifications = true;
-        fastCommentsSSOUser.displayLabel = "VIP User";
-        fastCommentsSSOUser.websiteUrl = "https://example.com/user-profile-page";
-        fastCommentsSSOUser.isAdmin = false;
-        fastCommentsSSOUser.isModerator = false;
-        return fastCommentsSSOUser;
     }
 }
