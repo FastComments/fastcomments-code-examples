@@ -9,6 +9,8 @@ sso/php/.idea/modules.xml
 sso/php/.idea/php.iml
 sso/php/.idea/vcs.xml
 
+sso-verifier/node_modules
+
 .idea
 
 white-labeling/node_modules

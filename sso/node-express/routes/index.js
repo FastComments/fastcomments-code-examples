@@ -8,7 +8,7 @@ const TENANT_ID = 'demo'; // REPLACE THIS WITH YOUR TENANT ID
 function getSSOConfig(req) {
     // Create the user object from your database.
     const someUser = {
-        id: 1,
+        id: '1',
         email: 'someone@somewhere.com',
         username: 'someone',
         displayName: 'Some Username',
