@@ -10,7 +10,6 @@ class Server
         $timestamp = time() * 1000;
 
         $result = array();
-        $result['timestamp'] = $timestamp;
 
         // Here we hard code the user, but you should fetch the user information from your database.
         $sso_user = array();
@@ -29,6 +28,7 @@ class Server
 
         // The ?logout=true checks here are just for the demo, you can remove them.
         $isLoggedOut = isset($_GET['logout']);
+        $result['timestamp'] = $timestamp;
         $result['userDataJSONBase64'] = $isLoggedOut ? null : $userDataJSONBase64;
         $result['verificationHash'] = $isLoggedOut ? null : $verificationHash;
         $result['loginURL'] = '?login'; // Replace with an actual login page url.
